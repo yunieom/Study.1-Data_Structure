@@ -1,5 +1,7 @@
 package list.arraylist.implementation;
 
+import java.util.ListIterator;
+
 public class ArrayList {
 	private int size = 0;
 	private Object[] elementData = new Object[100]; //최대 100개의 데이터를 수용할 수 있는 배열 Object 생성 (Array)
@@ -27,6 +29,109 @@ public class ArrayList {
 	public boolean addFirst(Object element) {
 		return add(0, element);
 	}
+	
+	// toString 구현
+	public String toString() {
+		String str= "[";
+		for(int i=0; i<size; i++) {
+			str += elementData[i];
+			if(i < size-1) {
+				str += ",";	
+			}
+			
+		}
+		return str + "]";
+				
+	}
+	
+	// remove 구현
+	public Object remove (int index) {
+		Object removed = elementData[index];
+		for(int i= index+1; i<size; i++) {
+			elementData[i-1]=elementData[i];
+		}
+		size--;
+		elementData[size] = null;
+		return removed;
+	}
+	
+	// removeFirst 구현
+	public Object removeFirst() {
+		return remove(0);
+	}
+	public Object removeLast() {
+		return remove(size-1);
+	}
+	
+	// get 구현
+	public Object get(int index) {
+		return elementData[index];
+	}
+	
+	// size 구현
+	public int size() {
+		return size;
+	}
+	
+	// 해당 요소의 밸류로 인덱스 찾는 indexOf 구현 
+	public int indexOf (Object o) {
+		for (int i=0; i<size; i++) {
+			if(o.equals(elementData[i])) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	// Iterlator next, hasNext, add 구현
+	public ListIterator listIterator() {
+		return new ListIterator();
+	}
+	
+	class ListIterator {
+		private int nextIndex = 0;
+		
+		// hasNext 구현
+		public boolean hasNext() {
+			return nextIndex < size();
+		}
+		// next 구현 
+		public Object next() {
+			//Object returnData = elementData[nextIndex];
+			//nextIndex++;
+			//return returnData;
+			
+			return elementData[nextIndex++];
+		}
+		
+		// previous 구현 
+		public Object previous() {
+			return elementData[--nextIndex];
+		}
+		
+		// hasPrevious 구현
+		public boolean hasPrevious() {
+			return nextIndex>0;
+		}
+		
+		// add 구현
+		public void add(Object element) {
+			ArrayList.this.add(nextIndex++, element);
+		}
+		
+		//remove 구현
+		public void remove() {
+			ArrayList.this.remove(nextIndex-1);
+			nextIndex--;
+		}
+		
+	}
+	
+	
+	
+	
+	
+
 	
 
 }
