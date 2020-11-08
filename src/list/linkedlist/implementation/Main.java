@@ -18,5 +18,15 @@ public class Main {
         System.out.println(numbers.node(5)); // 세번째 처음 addLast가 실행된 60이 호출
         
         numbers.add(1, 15); // 1번 인덱스에 값 15 을 넣겠다.
+        System.out.println(numbers); // toString 메소드 구현으로 리스트를 볼 수 있다.
+        
+        System.out.println(numbers.removeFirst()); //첫번째 데이터 10 삭제
+        System.out.println(numbers); 
+        
+        System.out.println(numbers.remove(1)); // 인덱스 1번 (2번째 데이터) 20 삭제
+        System.out.println(numbers);
+        
+        System.out.println(numbers.removeLast()); //마지막 데이터 60 삭제
+        System.out.println(numbers);
     }
 }

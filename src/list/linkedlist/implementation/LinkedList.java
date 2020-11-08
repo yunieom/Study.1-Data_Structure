@@ -67,7 +67,55 @@ public class LinkedList {
 		}
 		
 	}
+	//toString 구현
+	public String toString() {
+		if(head == null) { //head가 빈값이라면, 리스트에 데이터가 없다면
+			return "[]";
+		}
+		Node temp = head;
+		String str = "[";
+		
+		while(temp.next != null) { //head 다음노드가 있다면 반복문 실행하다 tail 노드에서 멈춤(데이터가 null이기 때문)
+			str += temp.data + ", ";
+			temp = temp.next; 
+		}
+		str += temp.data;
+		
+		return str+"]";
+	}
 	
+	//removeFirst 구현
+	public Object removeFirst() {
+		Node temp = head;
+		head = head.next;
+		Object returnData = temp.data;
+		temp = null;
+		size--;
+		return returnData;
+	}
+	
+	//remove 구현
+	public Object remove(int k) {
+		if(k == 0) {
+			return removeFirst();
+		}
+		Node temp = node(k-1);
+		Node tobeDeleted = temp.next;
+		temp.next = temp.next.next;
+		Object returnData = tobeDeleted.data;
+		if(tobeDeleted == tail) {
+			tail = temp;
+		}
+		tobeDeleted = null;
+		size--;
+		
+		return returnData;
+	}
+	
+	//removeLast 구현
+	public Object removeLast() {
+		return remove(size-1);
+	}
 
 	
 }
