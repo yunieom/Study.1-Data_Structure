@@ -28,5 +28,16 @@ public class Main {
         
         System.out.println(numbers.removeLast()); //마지막 데이터 60 삭제
         System.out.println(numbers);
+        
+        System.out.println(numbers.size());
+        System.out.println(numbers.get(2)); // 2번째 인덱스 값 가져오기
+        
+        System.out.println(numbers);
+        System.out.println(numbers.indexOf(30)); //30데이터가 있는 인덱스 -> 2 
+        
+        LinkedList.ListIterator i = numbers.listIterator();
+        System.out.println(i.next()); // 첫번째 데이터 값
+        System.out.println(i.next()); // 두번째 데이터 값
+        System.out.println(i.next()); // 세번째 데이터 값
     }
 }

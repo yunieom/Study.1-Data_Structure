@@ -116,6 +116,61 @@ public class LinkedList {
 	public Object removeLast() {
 		return remove(size-1);
 	}
+	
+	//size 구현
+	public int size() {
+		return size;
+	}
+	
+	//get 구현
+	public Object get(int k) {
+		Node temp = node(k);
+		return temp.data;
+	}
+	
+	//indexOf 구현
+	public int indexOf(Object data) {
+		Node temp = head;
+		int index = 0;
+		while(temp.data != data) { //찾는 data가 temp의 data가 아니라면 반복문 실행 
+			temp = temp.next; // 그럼 temp.next 의 데이터로 가기
+			index ++; // temp.next 값으로 넘어갔기 때문에 index +1 해주기 
+			if(temp == null) { // 제일 끝에 있는 값으로 갔단 얘기 (입력한 데이터가 끝까지 돌 때까지 리스트에 없음)
+				return -1; // 반복문 종료 (-1을 답해주고)
+			}
+		}
+		return index;
+	}
+	
+	//Iterator 구현
+	public ListIterator listIterator() { //ListIterator(class) , listIterator(method)
+		return new ListIterator(); // ListIterator를 인스턴스화 시켜서 리턴 -> Main.class line 38의 i으로 받음
+	}
+	class ListIterator{
+		private Node next; 
+		private Node lastReturned; //lastReturned를 ListIterator() 전역에서 사용할 수 있는 인스턴스 변수로 만들기
+		private int nextIndex;
+		
+		ListIterator() {
+			next = head; // 초기화 구문 처음 listIterator 가 생성됐을 때 next라고 하는 인스턴스 변수의 값으로 head값(첫번째 엘리먼트값)으로 지정
+		}
+		public Object next() {
+			lastReturned = next; //next 값을 head값으로 지정한 후 lastReturned를 next로 지정
+			next = next.next; // next는 또 다음 인덱스로 이동
+			nextIndex++; // next가 이동할 때마다 카운트
+			
+			return lastReturned.data;
+			
+		}
+		
+	}
+		
+		
+
+	
+	 
+	 
+	
 
 	
 }
