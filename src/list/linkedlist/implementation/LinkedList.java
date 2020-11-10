@@ -162,8 +162,41 @@ public class LinkedList {
 			return lastReturned.data;
 			
 		}
+		// Iterator hasNext 구현
+		public boolean hasNext() {
+			return nextIndex < size();
+		}
+		
+		// Iterator add 구현
+		public void add(Object input) {
+			Node newNode = new Node(input);
+			
+			if(lastReturned == null) {
+				// 처음위치에 추가할 때
+				head = newNode; // add 메소드를 사용하면 newNode 새로운 변수가 head를 가르키고
+				newNode.next = next; // newNode의 다음값은 next
+			} else {
+				// 중간위치에 추가할 때
+				lastReturned.next = newNode;
+				newNode.next = next;
+			}
+
+			lastReturned = newNode;
+			nextIndex++;
+			size++;
+		}
+		
+		// Iterator remove 구현
+		public void remove() {
+			if(nextIndex == 0) {
+				throw new IllegalStateException(); //? 이건 뭐야?
+			}
+			LinkedList.this.remove(nextIndex-1);
+			nextIndex--;
+		}
 		
 	}
+	
 		
 		
 

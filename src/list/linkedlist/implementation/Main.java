@@ -33,11 +33,32 @@ public class Main {
         System.out.println(numbers.get(2)); // 2번째 인덱스 값 가져오기
         
         System.out.println(numbers);
-        System.out.println(numbers.indexOf(30)); //30데이터가 있는 인덱스 -> 2 
+        System.out.println(numbers.indexOf(30)); //30데이터가 있는 인덱스 -> 1
         
         LinkedList.ListIterator i = numbers.listIterator();
-        System.out.println(i.next()); // 첫번째 데이터 값
-        System.out.println(i.next()); // 두번째 데이터 값
-        System.out.println(i.next()); // 세번째 데이터 값
+        
+        i.add(5); //i 가 한번도 사용되지 않았을 때. add를 하면 head 자리에 input data(5)가 입력된다.
+        System.out.println(numbers); // [5,15,30,40,50]
+        
+        while(i.hasNext()) {
+        	if((int)i.next() == 30) { // 30인 데이터를 찾아 지우기. 단 linkedList의 단점이 나오는데 처음(head)부터 반복문을 돌기때문에 길이가 긴 리스트의 경우 시간이 오래걸리는 비효율 적인 remove 방법이다.
+        		i.remove();
+        	}
+        }
+        System.out.println(numbers);
+        
+        //System.out.println(i.next()); // 첫번째 데이터 값
+        //System.out.println(i.next()); // 두번째 데이터 값
+        //System.out.println(i.next()); // 세번째 데이터 값
+        
+        // 사이즈의 값이 넥스트 인덱스보다 크다면 next를 실행했을 때 가져올 데이터가 있다.
+        // 사이즈의 값이 넥스트 인덱스와 같다면, 작다면 next를 실행했을 때 가져올 데이터는 null.
+        System.out.println(i.hasNext()); // 다섯번째 값이 있나?(while문에서 i가 next가 true인 경우는 다 돌고나옴. -> false
+        
+        
+        
+        
+        
+       
     }
 }
