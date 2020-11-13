@@ -88,7 +88,7 @@ public class ArrayList {
 		return new ListIterator();
 	}
 	
-	class ListIterator {
+	public class ListIterator {
 		private int nextIndex = 0;
 		
 		// hasNext 구현

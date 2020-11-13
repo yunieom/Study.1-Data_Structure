@@ -146,7 +146,8 @@ public class LinkedList {
 	public ListIterator listIterator() { //ListIterator(class) , listIterator(method)
 		return new ListIterator(); // ListIterator를 인스턴스화 시켜서 리턴 -> Main.class line 38의 i으로 받음
 	}
-	class ListIterator{
+	
+	public class ListIterator{
 		private Node next; 
 		private Node lastReturned; //lastReturned를 ListIterator() 전역에서 사용할 수 있는 인스턴스 변수로 만들기
 		private int nextIndex;
