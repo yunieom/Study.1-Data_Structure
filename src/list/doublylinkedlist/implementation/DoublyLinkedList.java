@@ -1,5 +1,7 @@
 package list.doublylinkedlist.implementation;
 
+import javax.lang.model.element.NestingKind;
+
 public class DoublyLinkedList {
 	private Node head;
 	private Node tail;
@@ -169,7 +171,11 @@ public class DoublyLinkedList {
 		return index;
 	}
 	
-	//Iterator 구현
+	
+	
+	
+	// Iterator 구현
+	// doublyLinkedList는 LinkedList와 달리 ArrayList와 같이 이전(prev)노드 탐색이 가능하다. 
 	public ListIterator listIterator() { //ListIterator(class) , listIterator(method)
 		return new ListIterator(); // ListIterator를 인스턴스화 시켜서 리턴 -> Main.class line 38의 i으로 받음
 	}
@@ -182,6 +188,7 @@ public class DoublyLinkedList {
 		ListIterator() {
 			next = head; // 초기화 구문 처음 listIterator 가 생성됐을 때 next라고 하는 인스턴스 변수의 값으로 head값(첫번째 엘리먼트값)으로 지정
 		}
+		// 다음 노드 탐색
 		public Object next() {
 			lastReturned = next; //next 값을 head값으로 지정한 후 lastReturned를 next로 지정
 			next = next.next; // next는 또 다음 인덱스로 이동
@@ -190,6 +197,23 @@ public class DoublyLinkedList {
 			return lastReturned.data;
 			
 		}
+		
+		// 이전 노드 탐색
+		public Object previous() {
+			if(next == null) { //next의 데이터가 없다면
+				lastReturned = next = tail; // lastreturned 는 테일 노드
+			}else { // next의 데이터가 있다면 (테일에서 한번 이미 nextIndex가 -- 된 상황
+				lastReturned = next = next.prev; // lastReturned 의 넥스트는 기존 넥스트의 한개 전 노드
+			}
+			nextIndex--;
+			return lastReturned.data;
+		}
+		
+		// Iterator hasPrevious 구현
+		public boolean hasPrevious() {
+			return nextIndex < size();
+		}
+		
 		// Iterator hasNext 구현
 		public boolean hasNext() {
 			return nextIndex < size();
@@ -206,7 +230,13 @@ public class DoublyLinkedList {
 			} else {
 				// 중간위치에 추가할 때
 				lastReturned.next = newNode;
-				newNode.next = next;
+				newNode.prev = lastReturned;
+				if(next != null) { // 넥스트가 테일노드가 아니라면
+					newNode.next = next; // 새로 추가된 노드의 넥스트는 넥스트노드
+					next.prev = newNode; // 그리고 그 넥스트노드의 이전 노드는 새로 추가된 노드
+				} else { // 넥스트가 테일 노드라면 
+					tail = newNode; // 새로 추가된 노드가 테일노드
+				}
 			}
 
 			lastReturned = newNode;
@@ -215,11 +245,40 @@ public class DoublyLinkedList {
 		}
 		
 		// Iterator remove 구현
+		// p : 삭제하려는 노드의 이전 노드. n : 삭제하려는 노드의 다음노드
 		public void remove() {
 			if(nextIndex == 0) {
 				throw new IllegalStateException(); //? 이건 뭐야?
 			}
-			DoublyLinkedList.this.remove(nextIndex-1);
+			
+			Node n = lastReturned.next;
+			Node p = lastReturned.prev; 
+			
+			if (p == null) { // 헤드노드 삭제				
+				head = n; 
+				head.prev = null;
+				lastReturned = null;
+			}else {
+				p.next = next;
+				lastReturned.prev = null;
+			}
+			
+			if(n == null) { // 테일노드 삭제 
+				tail = p;
+				tail.next = null;
+			}else {
+				n.prev = p;	
+			}
+			
+			if(next == null) { // 마지막 next가 null이라면
+				lastReturned = tail; //lastReturned가 tail. 테일노드 지정
+			}else {
+				lastReturned = next.prev;
+			}
+			
+			lastReturned =next.prev;
+			
+			size--;
 			nextIndex--;
 		}
 		
